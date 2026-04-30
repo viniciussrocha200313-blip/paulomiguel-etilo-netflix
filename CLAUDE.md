@@ -121,6 +121,43 @@ Fontes:
 - Commit: `9bb7658` · branch `main`
 - Deploy: https://paulomiguel-etilo-netflix.vercel.app
 
+### ✅ Correção da foto Paulo Miguel na tela de login — 2026-04-30
+- Foto não estava aparecendo no painel esquerdo do login porque o componente `MentorPortrait mode="full" side="right"` usa `width: 70%` ancorado à direita + gradiente "to right" que escurecia 45% da imagem com `#080808`. Dentro do painel de 50% da tela, a foto ficava espremida no canto e o gradiente cobria quase tudo.
+- Em `src/screen-landing.jsx` substituído `<MentorPortrait>` por `<img src="assets/paulo-miguel.png">` direto, com `position: absolute, inset: 0, width/height: 100%, object-fit: cover, object-position: center top` (rosto visível no topo)
+- Adicionados dois overlays sutis (gradiente escuro topo + rodapé) só pra preservar legibilidade do wordmark e copyright sobre a foto
+- Nenhuma outra alteração — `MentorPortrait` continua existindo em `atoms.jsx` e é usado pelas outras telas
+- Commit: `7ba6f4a` · Deploy: https://paulomiguel-etilo-netflix.vercel.app
+
+### ✅ Landing page de curso ao clicar em "Mais Cursos" — 2026-04-30
+- **Criado** `src/screen-course-landing.jsx` (placeholder genérico — textos serão trocados pelo cliente). Recebe props `{ course, onNavigate }`.
+  - **HERO 100vh:** background `paulo-miguel.png` + gradientes `to right #080808 45%` e `to top 50%`; breadcrumb top-left; botão "✕ Voltar" top-right (ghost gold) → volta pra `home`; conteúdo bottom-left com badge categoria, H1 Playfair 56, subtítulo Cormorant italic gold, descrição muted, stats (12h · 8 módulos · ♾ Vitalício · Certificado), price box (DE R$ 1.997 → R$ 997 + 12× de R$ 97) com botão "QUERO ESTE CURSO →" que dispara `alert("Em breve — integração Stripe")`
+  - **Seção "Você vai aprender":** grid 2 colunas, 8 tópicos (`→` gold + título 15px bold + desc 13px muted)
+  - **Seção Currículo:** accordion 8 módulos (state local `openIdx`); aberto recebe `border-left: 3px solid var(--gold)` + animação de altura/opacidade
+  - **Seção Para quem é:** 3 cards (.card) lado a lado com ícone + título + descrição
+  - **Seção Depoimentos:** 3 cards escuros, aspas Cormorant 72px gold, texto + avatar com iniciais + nome + OAB + ★★★★★
+  - **Seção Mentor:** `<MentorPortrait side="left" mode="full" />` à esquerda + bio 540px + grid 4 stats (Advogados formados / Anos / Honorários / Recomendam) à direita
+  - **Seção CTA Final:** repete price box + selo `IconGuarantee` "Garantia incondicional de 7 dias"
+- **Wiring (`src/screen-home.jsx` — só onClick + propagação de prop, zero mudança visual):**
+  - `ScreenHome` aceita `onOpenCourse`
+  - `<MoreCoursesCarousel onOpenCourse={onOpenCourse} />`
+  - `MoreCoursesCarousel` aceita `onOpenCourse` e passa pra cada `<MoreCourseCard onOpenCourse={...} />`
+  - `MoreCourseCard`: trocado `const open = () => window.open("#landing-page", "_blank")` por `() => onOpenCourse?.(course)`
+- **Roteamento (`src/app.jsx`):**
+  - Novo state `courseData` (objeto do curso clicado, persistido em `localStorage["mal_course"]`)
+  - Novo handler `openCourse(course)` que faz `setCourseData + setRoute("course-landing")`
+  - Nova rota `route === "course-landing" && <ScreenCourseLanding course={courseData} onNavigate={navigate} />`
+  - `ScreenHome` recebe `onOpenCourse={openCourse}`
+- **`index.html`:** adicionado `<script type="text/babel" src="src/screen-course-landing.jsx">` antes de `app.jsx`
+- **Não toquei** em design system, atoms, data, styles, telas 02-05, topbar (topbar continua visível em `course-landing` — close button do hero é apenas affordance adicional)
+- Componentes reaproveitados: `IconStar`, `IconArrow`, `IconClock`, `IconBriefcase`, `IconCertificate`, `IconCheck`, `IconChevron`, `IconGuarantee`, `MentorPortrait`, classes `.btn`, `.btn-gold`, `.btn-lg`, `.glow-gold`, `.badge-gold`, `.card`, `.page`, `.f-display`, `.f-serif`, `.fade-in`
+- Commit: `48be5cc` · branch `main`
+- Deploy: https://paulomiguel-etilo-netflix.vercel.app (auto-deploy via push)
+
+### ⚠️ Atenção — limpeza pendente
+- O `git add .` do commit `7ba6f4a` acidentalmente pegou três arquivos MP4 soltos na raiz do projeto que NÃO fazem parte do código: `222222222.mp4`, `7.mp4`, `9.mp4`. Foram pushed pro GitHub público.
+- Há ainda `333333333333.mp4` na raiz (untracked) que entraria no próximo `git add .` se não for tratado.
+- Pendente decisão do Vinicius: remover do repo (`git rm --cached *.mp4` + adicionar `*.mp4` ao `.gitignore`) ou reescrever histórico (`git reset --soft HEAD~1` + force push) caso os vídeos sejam confidenciais.
+
 ### 🔄 Em andamento
 - Plataforma rodando como protótipo HTML estático com React via CDN
 
@@ -151,5 +188,5 @@ Ao concluir qualquer tarefa, adicione em "Histórico de Tarefas":
 
 ---
 
-*Última atualização: 2026-04-30 — após deploy da tela de login*
+*Última atualização: 2026-04-30 — após deploy da landing page de curso*
 *Atualizado por: Claude Code*

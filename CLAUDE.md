@@ -153,6 +153,24 @@ Fontes:
 - Commit: `48be5cc` · branch `main`
 - Deploy: https://paulomiguel-etilo-netflix.vercel.app (auto-deploy via push)
 
+### 🔄 Responsividade mobile — em camadas (B) — 2026-04-30
+Plano: 6 etapas em commits separados, cada uma aprovada antes de avançar. Breakpoints adotados: **480 / 768 / 1024 / 1280**.
+
+#### ✅ Etapa 1 — `styles.css` foundation
+- Adicionadas 2 media queries (`<= 768px` e `<= 480px`) ao final de `styles.css`
+- `.page` e `.page-narrow` padding lateral: `64px` (default) → `32px` (<=768) → `16px` (<=480)
+- `.btn-lg` em mobile: `letter-spacing: 0.1em` (<=768), `height: 52px / font-size: 11.5px / padding: 0 18px` (<=480)
+- `.btn` em mobile (<=480): `letter-spacing: 0.08em`
+- `.tabs` em mobile (<=768): `overflow-x: auto`, scrollbar oculta, `flex-shrink: 0` nos `.tab`
+- `.lesson-row`:
+  - <=768: grid `48px 100px 1fr auto` (4 cols), gap menor; `nth-child(5)` (chevron final) escondido
+  - <=480: grid `28px 1fr auto` (3 cols); `nth-child(2)` (thumb) e `nth-child(5)` (chevron) escondidos
+- Design system 100% intacto (zero alteração em cores, fontes ou tokens)
+- JSX intocado — apenas CSS
+- Commit: pendente
+
+#### ⏸️ Etapas 2-6 (aguardando aprovação): topbar (hambúrguer) → login → home → player → módulos+progresso+course landing
+
 ### ⚠️ Atenção — limpeza pendente
 - O `git add .` do commit `7ba6f4a` acidentalmente pegou três arquivos MP4 soltos na raiz do projeto que NÃO fazem parte do código: `222222222.mp4`, `7.mp4`, `9.mp4`. Foram pushed pro GitHub público.
 - Há ainda `333333333333.mp4` na raiz (untracked) que entraria no próximo `git add .` se não for tratado.

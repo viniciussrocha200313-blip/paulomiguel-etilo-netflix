@@ -110,21 +110,30 @@ Fontes:
 - Projeto criado e exportado do Claude Design
 - Repositório conectado ao GitHub (viniciussrocha200313-blip)
 - Vercel conectado e configurado para auto-deploy
+- **Auto-deploy GitHub → Vercel funcionando** (push em `main` dispara build automático)
+
+### ✅ Tela de login premium (Screen 01) — 2026-04-30
+- Substituído `src/screen-landing.jsx` (antiga página de vendas) por tela de login 50/50
+- Lado esquerdo: foto Paulo Miguel (mantido `MentorPortrait side="right"`, mesmo gradiente), wordmark + tagline "Estratégias jurídicas de alto valor", copyright bottom-left
+- Lado direito (`#0d0d0d`): painel de login com brand, divisor, headline "Acessar minha conta", inputs E-mail/Senha (toggle de visibilidade), "Esqueceu sua senha?", botão dourado "ENTRAR NA MALETA", divisor "ou", botão ghost "Entrar em modo demonstração →" (bypass beta → vai pra Home), badges 🔒/✦
+- Atualizado `src/topbar.jsx`: retorna `null` em `route === "landing"` (login fullscreen sem topbar), removido bloco "Já sou aluno"/"Quero a Maleta", adicionado botão ghost "Sair da conta" no canto direito (navega pra `landing`)
+- Design system 100% preservado, demais telas (02-05) intocadas
+- Commit: `9bb7658` · branch `main`
+- Deploy: https://paulomiguel-etilo-netflix.vercel.app
 
 ### 🔄 Em andamento
-- Importação e organização do código exportado do Claude Design
+- Plataforma rodando como protótipo HTML estático com React via CDN
 
 ### 📋 Próximas tarefas (em ordem)
-1. Organizar estrutura de pastas do projeto
-2. Configurar Supabase (aguardando Vinicius indicar projeto)
-3. Implementar autenticação (login/logout)
-4. Criar banco de dados (módulos, aulas, progresso do aluno)
-5. Conectar vídeos reais aos players
-6. Implementar controle de progresso por aluno
-7. Integrar Stripe para pagamentos
-8. Configurar webhook Stripe → liberar acesso após compra
-9. Testes completos
-10. Deploy final em produção
+1. Configurar Supabase (aguardando Vinicius indicar projeto)
+2. Implementar autenticação real (login/logout) conectando inputs ao Supabase Auth
+3. Criar banco de dados (módulos, aulas, progresso do aluno)
+4. Conectar vídeos reais aos players
+5. Implementar controle de progresso por aluno
+6. Integrar Stripe para pagamentos
+7. Configurar webhook Stripe → liberar acesso após compra
+8. Testes completos
+9. Deploy final em produção
 
 ---
 
@@ -142,5 +151,5 @@ Ao concluir qualquer tarefa, adicione em "Histórico de Tarefas":
 
 ---
 
-*Última atualização: 2026-04-30*
+*Última atualização: 2026-04-30 — após deploy da tela de login*
 *Atualizado por: Claude Code*

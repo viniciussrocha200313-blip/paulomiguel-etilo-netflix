@@ -503,3 +503,112 @@ button:focus-visible, .tab:focus-visible {
   .lesson-row > :nth-child(2),
   .lesson-row > :nth-child(5) { display: none; }
 }
+
+/* ============================================================
+   RESPONSIVE — Layer 2: Topbar mobile (hamburger + drawer @ <= 900px)
+   ============================================================ */
+
+/* Hamburger button — hidden by default; only renders on <= 900px */
+.tb-hamburger {
+  display: none;
+  width: 44px; height: 44px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  margin-left: auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 4px;
+  transition: background 180ms ease;
+}
+.tb-hamburger:hover { background: rgba(201, 160, 80, 0.06); }
+.tb-hamburger > span {
+  display: block;
+  width: 20px; height: 2px;
+  background: var(--gold);
+  border-radius: 1px;
+  margin: 0 auto;
+  transition: background 180ms ease;
+}
+
+@media (max-width: 900px) {
+  .tb-desktop-only { display: none !important; }
+  .tb-hamburger { display: inline-flex; }
+}
+
+/* Drawer overlay + panel */
+@keyframes tb-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes tb-drawer-slide-down {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+.tb-drawer-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  animation: tb-overlay-in 200ms ease;
+}
+.tb-drawer {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  background: #0d0d0d;
+  border-bottom: 1px solid rgba(201, 160, 80, 0.15);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+  animation: tb-drawer-slide-down 300ms ease;
+  padding: 16px 0 16px;
+}
+.tb-drawer-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  width: 44px; height: 44px;
+  background: transparent; border: 0;
+  color: var(--text-2);
+  cursor: pointer;
+  font-size: 20px; line-height: 1;
+  display: grid; place-items: center;
+  border-radius: 4px;
+  transition: color 180ms ease, background 180ms ease;
+}
+.tb-drawer-close:hover { color: var(--gold-hover); background: rgba(201, 160, 80, 0.06); }
+
+.tb-drawer-list {
+  list-style: none;
+  padding: 44px 0 0;
+  margin: 0;
+}
+.tb-drawer-item {
+  display: block;
+  width: 100%;
+  padding: 16px 24px;
+  font-family: var(--f-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-0);
+  background: transparent;
+  border: 0;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  letter-spacing: -0.005em;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+.tb-drawer-item:hover {
+  background: rgba(201, 160, 80, 0.06);
+  border-left-color: var(--gold);
+}
+.tb-drawer-item.is-active {
+  color: var(--gold-hover);
+  border-left-color: var(--gold);
+  background: rgba(201, 160, 80, 0.06);
+}
+.tb-drawer-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 24px;
+}

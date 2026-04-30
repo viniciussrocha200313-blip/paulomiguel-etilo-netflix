@@ -167,9 +167,21 @@ Plano: 6 etapas em commits separados, cada uma aprovada antes de avançar. Break
   - <=480: grid `28px 1fr auto` (3 cols); `nth-child(2)` (thumb) e `nth-child(5)` (chevron) escondidos
 - Design system 100% intacto (zero alteração em cores, fontes ou tokens)
 - JSX intocado — apenas CSS
+- Commit: `3c1aea8`
+
+#### ✅ Etapa 2 — Topbar mobile (hambúrguer + drawer)
+- Em `styles.css`: novo bloco "Layer 2 — Topbar mobile" com classes `.tb-hamburger`, `.tb-desktop-only`, `.tb-drawer-overlay`, `.tb-drawer`, `.tb-drawer-close`, `.tb-drawer-list`, `.tb-drawer-item`, `.tb-drawer-divider`. Media query `@ <=900px` esconde `.tb-desktop-only` (com `!important` pra vencer estilos inline) e mostra `.tb-hamburger`
+- Em `src/topbar.jsx`:
+  - State `menuOpen`; effect que fecha o drawer ao trocar de rota; effect que trava `body.overflow` e listener de `Escape` enquanto aberto
+  - Wordmark agora é o único item sempre visível
+  - `<nav>`, search, e cluster direito (bell + avatar + Sair da conta) recebem classe `tb-desktop-only` (escondidos em <=900)
+  - Novo `<button class="tb-hamburger">` (44×44, 3 linhas gold de 20×2px) renderizado depois do cluster, visível só em <=900
+  - Drawer renderizado fora do `<header>` (fragment): overlay `rgba(0,0,0,0.6)` com animação `tb-overlay-in 200ms`; painel `#0d0d0d` com `border-bottom 1px var(--border)`, `slideDown 300ms`. Itens em `<ul>` (Início / Módulos / Meu Progresso / divisor / Sair da conta), Playfair 18px 600, padding 16px 24px, hover `bg rgba(201,160,80,0.06)` + `border-left 3px gold`. Item ativo recebe `.is-active`. Botão `✕` close 44×44 no canto superior direito.
+  - Fechar drawer: clicar fora (overlay), no botão `✕`, ou tecla `Esc`. Auto-fecha ao navegar.
+- Desktop (>=901px) idêntico ao anterior — zero mudança visual
 - Commit: pendente
 
-#### ⏸️ Etapas 2-6 (aguardando aprovação): topbar (hambúrguer) → login → home → player → módulos+progresso+course landing
+#### ⏸️ Etapas 3-6 (aguardando aprovação): login → home → player → módulos+progresso+course landing
 
 ### ⚠️ Atenção — limpeza pendente
 - O `git add .` do commit `7ba6f4a` acidentalmente pegou três arquivos MP4 soltos na raiz do projeto que NÃO fazem parte do código: `222222222.mp4`, `7.mp4`, `9.mp4`. Foram pushed pro GitHub público.

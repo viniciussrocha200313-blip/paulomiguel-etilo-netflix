@@ -3,7 +3,7 @@
 const { useState, useEffect } = React;
 
 const App = () => {
-  // route can be: "landing" | "home" | "modules" | "module" | "player" | "progress"
+  // route can be: "landing" | "home" | "modules" | "module" | "player" | "progress" | "course-landing"
   const [route, setRoute] = useState(() => {
     try { return localStorage.getItem("mal_route") || "landing"; } catch { return "landing"; }
   });
@@ -13,10 +13,14 @@ const App = () => {
   const [lessonN, setLessonN] = useState(() => {
     try { return parseInt(localStorage.getItem("mal_ln") || "4", 10); } catch { return 4; }
   });
+  const [courseData, setCourseData] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("mal_course") || "null"); } catch { return null; }
+  });
 
   useEffect(() => { try { localStorage.setItem("mal_route", route); } catch {} }, [route]);
   useEffect(() => { try { localStorage.setItem("mal_mid", String(moduleId)); } catch {} }, [moduleId]);
   useEffect(() => { try { localStorage.setItem("mal_ln", String(lessonN)); } catch {} }, [lessonN]);
+  useEffect(() => { try { localStorage.setItem("mal_course", JSON.stringify(courseData)); } catch {} }, [courseData]);
 
   // Scroll to top on route change
   useEffect(() => {
@@ -26,6 +30,7 @@ const App = () => {
   const navigate = (r) => setRoute(r);
   const openModule = (id) => { setModuleId(id); setRoute("module"); };
   const openLesson = (mid, ln) => { setModuleId(mid); setLessonN(ln); setRoute("player"); };
+  const openCourse = (course) => { setCourseData(course); setRoute("course-landing"); };
 
   // Hidden quick-jump bar — small bottom-left switcher to nav between all 5 screens
   const SwitcherChip = ({ id, label }) => (
@@ -51,12 +56,13 @@ const App = () => {
       <Topbar route={route} onNavigate={navigate} />
 
       <main>
-        {route === "landing"  && <ScreenLanding  onNavigate={navigate} />}
-        {route === "home"     && <ScreenHome     onNavigate={navigate} onOpenModule={openModule} onOpenLesson={openLesson} />}
-        {route === "modules"  && <ScreenModules  onNavigate={navigate} onOpenModule={openModule} onOpenLesson={openLesson} />}
-        {route === "module"   && <ScreenModule   moduleId={moduleId}  onNavigate={navigate} onOpenLesson={openLesson} />}
-        {route === "player"   && <ScreenPlayer   moduleId={moduleId}  lessonN={lessonN} onNavigate={navigate} onOpenModule={openModule} onOpenLesson={openLesson} />}
-        {route === "progress" && <ScreenProgress onNavigate={navigate} onOpenModule={openModule} />}
+        {route === "landing"        && <ScreenLanding       onNavigate={navigate} />}
+        {route === "home"           && <ScreenHome          onNavigate={navigate} onOpenModule={openModule} onOpenLesson={openLesson} onOpenCourse={openCourse} />}
+        {route === "modules"        && <ScreenModules       onNavigate={navigate} onOpenModule={openModule} onOpenLesson={openLesson} />}
+        {route === "module"         && <ScreenModule        moduleId={moduleId}  onNavigate={navigate} onOpenLesson={openLesson} />}
+        {route === "player"         && <ScreenPlayer        moduleId={moduleId}  lessonN={lessonN} onNavigate={navigate} onOpenModule={openModule} onOpenLesson={openLesson} />}
+        {route === "progress"       && <ScreenProgress      onNavigate={navigate} onOpenModule={openModule} />}
+        {route === "course-landing" && <ScreenCourseLanding course={courseData} onNavigate={navigate} />}
       </main>
 
       {/* Floating screen switcher (prototype helper) */}

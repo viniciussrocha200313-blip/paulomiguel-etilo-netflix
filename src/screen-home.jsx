@@ -1,6 +1,6 @@
 // screen-home.jsx — post-login dashboard
 
-const ScreenHome = ({ onNavigate, onOpenModule, onOpenLesson }) => {
+const ScreenHome = ({ onNavigate, onOpenModule, onOpenLesson, onOpenCourse }) => {
   const { MODULES, CONTINUE, MATERIALS, STATS } = window.MalData;
 
   return (
@@ -100,7 +100,7 @@ const ScreenHome = ({ onNavigate, onOpenModule, onOpenLesson }) => {
       </section>
 
       {/* ============ MAIS CURSOS DO MENTOR ============ */}
-      <MoreCoursesCarousel />
+      <MoreCoursesCarousel onOpenCourse={onOpenCourse} />
 
       <Footer />
     </div>
@@ -1395,7 +1395,7 @@ const MORE_COURSES = [
   },
 ];
 
-const MoreCoursesCarousel = () => {
+const MoreCoursesCarousel = ({ onOpenCourse }) => {
   const scrollRef = React.useRef(null);
   const [active, setActive] = React.useState(0);
   const CARD_W = 380;
@@ -1488,7 +1488,7 @@ const MoreCoursesCarousel = () => {
       }}>
         <style>{`.more-courses-row::-webkit-scrollbar{display:none}`}</style>
         {MORE_COURSES.map((c, i) => (
-          <MoreCourseCard key={i} course={c} index={i} total={MORE_COURSES.length} active={active} />
+          <MoreCourseCard key={i} course={c} index={i} total={MORE_COURSES.length} active={active} onOpenCourse={onOpenCourse} />
         ))}
         <div style={{ minWidth: 40, flexShrink: 0 }} />
       </div>
@@ -1517,12 +1517,12 @@ const MoreCoursesCarousel = () => {
   );
 };
 
-const MoreCourseCard = ({ course, index, total, active }) => {
+const MoreCourseCard = ({ course, index, total, active, onOpenCourse }) => {
   const [hover, setHover] = React.useState(false);
   const distFromActive = index - active;
   const rotY = distFromActive < -1 ? 2 : distFromActive > 1 ? -2 : 0;
 
-  const open = () => window.open("#landing-page", "_blank");
+  const open = () => onOpenCourse?.(course);
 
   return (
     <div onClick={open}

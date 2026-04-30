@@ -1,0 +1,450 @@
+/* ============================================================
+   MALETA DO ADVOGADO — Design tokens + global styles
+   ============================================================ */
+
+:root {
+  /* Colors */
+  --bg-0: #080808;
+  --bg-1: #111111;
+  --bg-2: #1a1a1a;
+  --bg-3: #221f1a;
+  --gold: #C9A050;
+  --gold-hover: #E8B85A;
+  --gold-deep: #8a6d34;
+  --gold-subtle: rgba(201, 160, 80, 0.12);
+  --gold-line: rgba(201, 160, 80, 0.22);
+  --text-0: #F5F0E8;
+  --text-1: #C8BFAE;
+  --text-2: #8A8070;
+  --text-3: #4A4540;
+  --border: rgba(201, 160, 80, 0.15);
+  --border-strong: rgba(201, 160, 80, 0.35);
+  --success: #4A7C59;
+  --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.6);
+  --shadow-elev: 0 18px 60px rgba(0, 0, 0, 0.75), 0 2px 0 rgba(201, 160, 80, 0.05) inset;
+
+  /* Typography */
+  --f-display: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --f-serif: "Cormorant Garamond", Georgia, serif;
+  --f-sans: "Manrope", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg-0);
+  color: var(--text-0);
+  font-family: var(--f-sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Subtle leather grain */
+  background-image:
+    radial-gradient(1200px 800px at 20% -10%, rgba(201, 160, 80, 0.05), transparent 60%),
+    radial-gradient(900px 600px at 110% 20%, rgba(201, 160, 80, 0.035), transparent 70%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.62  0 0 0 0 0.31  0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+
+/* ---------- Typography helpers ---------- */
+.f-display { font-family: var(--f-display); font-weight: 700; letter-spacing: -0.01em; }
+.f-serif   { font-family: var(--f-serif); font-weight: 600; }
+.f-sans    { font-family: var(--f-sans); }
+.f-badge {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 11px;
+}
+
+/* ---------- Scrollbar (Webkit) ---------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(201, 160, 80, 0.18); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(201, 160, 80, 0.35); }
+
+/* Hide scrollbars on horizontal rows but keep scrollable */
+.row-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 16px 4px 32px;
+}
+.row-scroll::-webkit-scrollbar { display: none; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 4px;
+  font-family: var(--f-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn-gold {
+  background: linear-gradient(180deg, var(--gold-hover), var(--gold));
+  color: #1a1308;
+  box-shadow: 0 8px 24px rgba(201, 160, 80, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.btn-gold:hover {
+  background: linear-gradient(180deg, #f0c468, var(--gold-hover));
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px rgba(201, 160, 80, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text-0);
+  border-color: var(--border-strong);
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold-hover); background: var(--gold-subtle); }
+.btn-sm { height: 36px; padding: 0 14px; font-size: 11px; }
+.btn-lg { height: 60px; padding: 0 30px; font-size: 13px; letter-spacing: 0.16em; }
+
+/* ---------- Badge ---------- */
+.badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--gold-subtle);
+  border: 1px solid var(--gold-line);
+  color: var(--gold-hover);
+  border-radius: 2px;
+  font-family: var(--f-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 10.5px;
+}
+.badge-solid {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--gold);
+  color: #1a1308;
+  border-radius: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 10px;
+}
+.badge-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-1);
+  border-radius: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 10px;
+}
+
+/* ---------- Section divider (gold star) ---------- */
+.section-label {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-0);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 16px;
+}
+.section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--gold-line), transparent);
+}
+.star { color: var(--gold); font-size: 12px; }
+
+/* ---------- Atmospheric backgrounds (CSS-painted "law office") ---------- */
+.atmosphere {
+  background:
+    radial-gradient(80% 60% at 30% 40%, rgba(201, 160, 80, 0.12), transparent 70%),
+    radial-gradient(60% 50% at 80% 60%, rgba(180, 130, 70, 0.18), transparent 75%),
+    linear-gradient(160deg, #1a1308 0%, #0c0a06 60%, #050402 100%);
+}
+.atmosphere-warm {
+  background:
+    radial-gradient(70% 60% at 80% 30%, rgba(232, 184, 90, 0.18), transparent 70%),
+    radial-gradient(50% 40% at 20% 80%, rgba(120, 80, 30, 0.25), transparent 70%),
+    linear-gradient(140deg, #1f1608 0%, #100b04 70%, #050402 100%);
+}
+.atmosphere-deep {
+  background:
+    radial-gradient(60% 80% at 60% 20%, rgba(160, 120, 60, 0.14), transparent 70%),
+    linear-gradient(180deg, #0e0c08 0%, #050402 100%);
+}
+
+/* ---------- App shell ---------- */
+.app {
+  min-height: 100%;
+  position: relative;
+}
+.page {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
+.page-narrow {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
+
+/* ---------- Page transition ---------- */
+.fade-in { animation: fadeIn 320ms ease both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Modules page row enhancements ---------- */
+.mod-shimmer {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0;
+  width: 30%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(201,160,80,0) 35%,
+    rgba(201,160,80,0.5) 50%,
+    rgba(201,160,80,0) 65%,
+    transparent 100%
+  );
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: mod-shimmer 4s ease-in-out infinite;
+}
+@keyframes mod-shimmer {
+  0%   { transform: translateX(-100%) skewX(-15deg); opacity: 0; }
+  20%  { opacity: 0; }
+  50%  { opacity: 0.45; }
+  80%  { opacity: 0; }
+  100% { transform: translateX(400%) skewX(-15deg); opacity: 0; }
+}
+
+.mod-numeral-reveal {
+  animation: mod-num-in 600ms ease-out both;
+}
+@keyframes mod-num-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mod-badge-glow {
+  animation: mod-badge-glow 3s ease-in-out infinite;
+}
+@keyframes mod-badge-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(201,160,80,0); }
+  50%      { box-shadow: 0 0 14px rgba(201,160,80,0.55); }
+}
+
+.mod-pulse-bar {
+  animation: mod-pulse-bar 2s ease-in-out infinite;
+}
+@keyframes mod-pulse-bar {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.7; box-shadow: 0 0 10px rgba(201,160,80,0.6); }
+}
+
+.mod-lock-pulse {
+  animation: mod-lock-pulse 3s ease-in-out infinite;
+}
+@keyframes mod-lock-pulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(201,160,80,0); }
+  50%      { box-shadow: 0 0 16px rgba(201,160,80,0.35); }
+}
+
+/* ---------- Tilt overlay animations ---------- */
+@keyframes tilt-particle-float {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+  25%      { transform: translateY(-6px) translateX(2px) scale(1.2); }
+  50%      { transform: translateY(0) translateX(-3px) scale(0.9); }
+  75%      { transform: translateY(4px) translateX(2px) scale(1.1); }
+}
+@keyframes tilt-scan {
+  0%   { top: 0%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ---------- Card primitive ---------- */
+.card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--shadow-card);
+  transition: all 200ms ease;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover { border-color: var(--gold-line); }
+
+/* ---------- Lesson row ---------- */
+.lesson-row {
+  display: grid;
+  grid-template-columns: 60px 132px 1fr auto auto;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 18px;
+  border: 1px solid transparent;
+  border-bottom: 1px solid rgba(201, 160, 80, 0.08);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 180ms ease;
+  position: relative;
+}
+.lesson-row:hover { background: rgba(201, 160, 80, 0.04); border-color: var(--border); }
+.lesson-row.is-current {
+  background: rgba(201, 160, 80, 0.08);
+  border-color: var(--border);
+}
+.lesson-row.is-current::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 3px;
+  background: var(--gold);
+  border-radius: 0 2px 2px 0;
+}
+.lesson-row.is-done { opacity: 0.72; }
+.lesson-row.is-done::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: flex;
+  gap: 32px;
+  border-bottom: 1px solid var(--border);
+}
+.tab {
+  position: relative;
+  padding: 14px 2px;
+  font-family: var(--f-sans);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+.tab:hover { color: var(--text-0); }
+.tab.is-active { color: var(--gold-hover); }
+.tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--gold);
+}
+
+/* ---------- Progress bar ---------- */
+.progress {
+  position: relative;
+  height: 4px;
+  background: rgba(201, 160, 80, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress > i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(to right, var(--gold), var(--gold-hover));
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(201, 160, 80, 0.4);
+}
+.progress.tall { height: 6px; }
+
+/* ---------- Lesson card thumbnail ---------- */
+.thumb {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-2);
+}
+.thumb .play-fab {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.55));
+}
+.lesson-card:hover .play-fab { opacity: 1; }
+.play-fab > div {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #1a1308;
+  display: grid; place-items: center;
+  font-size: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+/* ---------- Mini play icon ---------- */
+.icon-play {
+  display: inline-block;
+  width: 0; height: 0;
+  border-left: 8px solid currentColor;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  margin-left: 2px;
+}
+
+/* Selectable text */
+::selection { background: var(--gold); color: #1a1308; }
+
+/* ---------- Glow ---------- */
+.glow-gold {
+  box-shadow: 0 0 60px rgba(201, 160, 80, 0.35), 0 0 120px rgba(201, 160, 80, 0.15);
+}
+
+/* ---------- Hairline ---------- */
+.hairline {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-line), transparent);
+}
+
+/* Hide focus outline (we use border for active) */
+button:focus-visible, .tab:focus-visible {
+  outline: 2px solid var(--gold-line);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

@@ -32,7 +32,29 @@ const ScreenLanding = ({ onNavigate }) => {
         flex: 1, position: "relative", overflow: "hidden",
         background: "#080808",
       }}>
-        <MentorPortrait side="right" mode="full" scale={1.05} />
+        <img
+          src="assets/paulo-miguel.png"
+          alt="Paulo Miguel"
+          style={{
+            position: "absolute", inset: 0,
+            width: "100%", height: "100%",
+            objectFit: "cover",
+            objectPosition: "center top",
+            pointerEvents: "none",
+          }}
+        />
+        {/* Top shade for wordmark legibility */}
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0, height: 240,
+          background: "linear-gradient(to bottom, rgba(8,8,8,0.78), rgba(8,8,8,0.25) 60%, transparent)",
+          pointerEvents: "none", zIndex: 1,
+        }} />
+        {/* Bottom shade for copyright legibility */}
+        <div style={{
+          position: "absolute", bottom: 0, left: 0, right: 0, height: 120,
+          background: "linear-gradient(to top, rgba(8,8,8,0.78), transparent)",
+          pointerEvents: "none", zIndex: 1,
+        }} />
 
         {/* Wordmark + tagline (top-left) */}
         <div style={{

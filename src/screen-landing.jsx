@@ -1,275 +1,285 @@
-// screen-landing.jsx — public sales page
+// screen-landing.jsx — premium login screen (Screen 01)
 
 const ScreenLanding = ({ onNavigate }) => {
-  const { MODULES, TESTIMONIALS } = window.MalData;
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const inputBase = {
+    width: "100%", height: 48, padding: "0 14px",
+    background: "#111111",
+    border: "1px solid rgba(201,160,80,0.2)",
+    borderRadius: 4,
+    color: "var(--text-0)",
+    fontFamily: "var(--f-sans)", fontSize: 14,
+    outline: "none",
+    transition: "border-color 200ms ease",
+  };
+  const labelStyle = {
+    fontFamily: "var(--f-sans)", fontSize: 12,
+    textTransform: "uppercase", letterSpacing: "0.08em",
+    color: "#6B6560",
+    display: "block", marginBottom: 8,
+  };
 
   return (
-    <div className="fade-in">
+    <div className="fade-in" style={{
+      display: "flex", minHeight: "100vh", background: "#080808",
+    }}>
 
-      {/* ============ HERO ============ */}
-      <section style={{
-        position: "relative", minHeight: "calc(100vh - 64px)",
-        overflow: "hidden", borderBottom: "1px solid var(--border)",
+      {/* ============ LEFT (50%) — mentor photo + brand ============ */}
+      <div style={{
+        flex: 1, position: "relative", overflow: "hidden",
         background: "#080808",
       }}>
         <MentorPortrait side="right" mode="full" scale={1.05} />
-        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 140,
-          background: "linear-gradient(to bottom, transparent, var(--bg-0))" }} />
 
-        <div className="page" style={{ position: "relative", zIndex: 2, paddingTop: 80, paddingBottom: 80, maxWidth: 720 }}>
-          <div style={{ display: "flex", gap: 10, marginBottom: 28 }}>
-            <span className="badge-gold"><IconStar size={10} /> Acesso Exclusivo</span>
-            <span className="badge-outline">Edição 2026 · Vagas limitadas</span>
+        {/* Wordmark + tagline (top-left) */}
+        <div style={{
+          position: "absolute", top: 36, left: 40, zIndex: 2,
+          display: "flex", flexDirection: "column", gap: 12,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <span style={{
+              width: 36, height: 36, borderRadius: 4,
+              background: "linear-gradient(160deg, #E8B85A, #8a6d34)",
+              display: "grid", placeItems: "center",
+              boxShadow: "0 2px 8px rgba(201,160,80,0.35), inset 0 1px 0 rgba(255,255,255,0.3)",
+            }}>
+              <IconBriefcase size={18} color="#1a1308" />
+            </span>
+            <span style={{
+              fontFamily: "var(--f-display)", fontWeight: 700, fontSize: 22,
+              color: "var(--text-0)", letterSpacing: "-0.01em",
+            }}>
+              Maleta <span style={{ color: "var(--gold-hover)", fontStyle: "italic", fontWeight: 500 }}>do Advogado</span>
+            </span>
+          </div>
+          <span className="f-serif" style={{
+            fontSize: 18, fontStyle: "italic",
+            color: "#6B6560", marginLeft: 48,
+          }}>
+            Estratégias jurídicas de alto valor
+          </span>
+        </div>
+
+        {/* Copyright (bottom-left) */}
+        <div style={{
+          position: "absolute", bottom: 24, left: 40, zIndex: 2,
+          fontFamily: "var(--f-sans)", fontSize: 11, color: "#4A4540",
+          letterSpacing: "0.04em",
+        }}>
+          © 2026 Paulo Miguel · Maleta do Advogado
+        </div>
+      </div>
+
+      {/* ============ RIGHT (50%) — login panel ============ */}
+      <div style={{
+        flex: 1, position: "relative", overflow: "hidden",
+        background: "#0d0d0d",
+        borderLeft: "1px solid rgba(201,160,80,0.1)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: "40px 32px",
+      }}>
+        {/* Radial gradient backdrop */}
+        <div style={{
+          position: "absolute", inset: 0, pointerEvents: "none",
+          background: "radial-gradient(ellipse at 50% 100%, rgba(201,160,80,0.04) 0%, transparent 60%)",
+        }} />
+
+        {/* Decorative star top-right */}
+        <span style={{
+          position: "absolute", top: 28, right: 36,
+          fontFamily: "var(--f-serif)", fontSize: 48,
+          color: "rgba(201,160,80,0.06)", lineHeight: 1,
+          pointerEvents: "none",
+        }}>✦</span>
+
+        <div style={{
+          width: "100%", maxWidth: 420, position: "relative", zIndex: 2,
+        }}>
+
+          {/* 1. Brand row */}
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
+            <span style={{ color: "#C9A050", display: "inline-grid", placeItems: "center" }}>
+              <IconBriefcase size={32} color="#C9A050" />
+            </span>
+            <span className="f-display" style={{
+              fontSize: 24, fontWeight: 700, color: "var(--text-0)",
+              letterSpacing: "-0.01em",
+            }}>
+              Maleta do Advogado
+            </span>
           </div>
 
+          {/* 2. Divider */}
+          <div style={{
+            height: 1, width: "100%",
+            background: "rgba(201,160,80,0.1)",
+            marginBottom: 36,
+          }} />
+
+          {/* 3. Heading */}
           <h1 className="f-display" style={{
-            fontSize: 60, lineHeight: 1.05, margin: "0 0 26px",
-            letterSpacing: "-0.025em", maxWidth: 600,
+            fontSize: 32, fontWeight: 700, color: "var(--text-0)",
+            margin: "0 0 12px", lineHeight: 1.1, letterSpacing: "-0.015em",
           }}>
-            A <em style={{ fontStyle: "italic", color: "var(--gold-hover)", fontWeight: 600 }}>Maleta</em> que faltava<br/>na sua carreira jurídica.
+            Acessar minha conta
           </h1>
 
-          <p className="f-serif" style={{
-            fontSize: 21, lineHeight: 1.4, fontStyle: "italic",
-            color: "var(--text-1)", margin: "0 0 44px", maxWidth: 540,
+          {/* 4. Subheading */}
+          <p style={{
+            fontFamily: "var(--f-sans)", fontSize: 14,
+            color: "#6B6560", margin: "0 0 32px", lineHeight: 1.5,
           }}>
-            Seis módulos estratégicos com tudo que Paulo Miguel usa para estruturar carreiras de alto valor — sem fórmulas mágicas, sem teoria vazia.
+            Entre com suas credenciais para acessar o conteúdo
           </p>
 
-          {/* Price block */}
-          <div style={{
-            display: "inline-flex", flexDirection: "column",
-            padding: "24px 30px",
-            background: "rgba(17, 17, 17, 0.6)",
-            border: "1px solid var(--border-strong)",
-            borderRadius: 6,
-            marginBottom: 28,
-            backdropFilter: "blur(8px)",
-            minWidth: 480,
-          }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 14, flexWrap: "nowrap", whiteSpace: "nowrap" }}>
-              <span style={{ fontSize: 13, textDecoration: "line-through", color: "var(--text-3)", letterSpacing: "0.04em", flexShrink: 0 }}>De R$ 1.997</span>
-              <span className="badge-solid" style={{ fontSize: 9, flexShrink: 0 }}>−75% Lançamento</span>
-            </div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginTop: 6, whiteSpace: "nowrap" }}>
-              <span className="f-display" style={{ fontSize: 56, lineHeight: 1, color: "var(--gold-hover)", letterSpacing: "-0.03em", fontWeight: 800, flexShrink: 0 }}>
-                R$&nbsp;497
-              </span>
-              <span style={{ fontSize: 13, color: "var(--text-1)", flexShrink: 0 }}>à vista</span>
-            </div>
-            <span style={{ fontSize: 12, color: "var(--text-2)", marginTop: 6, letterSpacing: "0.04em", whiteSpace: "nowrap" }}>
-              ou 12× de R$ 49,70 · acesso vitalício
-            </span>
+          {/* 5. Email */}
+          <div style={{ marginBottom: 18 }}>
+            <label style={labelStyle}>E-mail</label>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="seu@email.com"
+              style={inputBase}
+              onFocus={e => e.target.style.borderColor = "#C9A050"}
+              onBlur={e => e.target.style.borderColor = "rgba(201,160,80,0.2)"}
+            />
           </div>
 
-          <div>
-            <button className="btn btn-gold btn-lg glow-gold" style={{ height: 64, padding: "0 36px", fontSize: 13 }}
-              onClick={() => onNavigate("home")}>
-              Quero minha Maleta agora <IconArrow size={14} />
-            </button>
-          </div>
-
-          <div style={{ display: "flex", gap: 32, marginTop: 28, color: "var(--text-2)", fontSize: 12.5, letterSpacing: "0.04em" }}>
-            <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <IconGuarantee size={14} /> Pagamento Seguro
-            </span>
-            <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <IconStar size={11} /> Acesso Imediato
-            </span>
-            <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <IconArrow size={11} dir="left" /> 7 dias de garantia
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ WHAT'S INSIDE ============ */}
-      <section className="page" style={{ padding: "96px 64px" }}>
-        <div style={{ maxWidth: 720, marginBottom: 56 }}>
-          <span className="badge-gold" style={{ marginBottom: 18, display: "inline-flex" }}>
-            <IconStar size={10} /> O que está na maleta
-          </span>
-          <h2 className="f-display" style={{ fontSize: 52, lineHeight: 1.05, margin: "0 0 18px", letterSpacing: "-0.02em" }}>
-            Tudo que você precisa <em style={{ fontStyle: "italic", color: "var(--gold-hover)", fontWeight: 600 }}>está aqui dentro.</em>
-          </h2>
-          <p className="f-serif" style={{ fontSize: 20, fontStyle: "italic", lineHeight: 1.45, color: "var(--text-1)", margin: 0 }}>
-            Seis módulos sequenciais. 48 aulas. 18h 30min de conteúdo prático — direto ao ponto, sem enrolação.
-          </p>
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
-          {MODULES.map(m => (
-            <div key={m.id} style={{
-              position: "relative", overflow: "hidden",
-              background: "var(--bg-1)",
-              border: "1px solid var(--border)",
-              borderRadius: 6,
-              padding: "28px 28px 24px",
-              minHeight: 280,
-              display: "flex", flexDirection: "column",
-              transition: "all 220ms ease",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--gold-line)"; e.currentTarget.style.transform = "translateY(-3px)"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.transform = "none"; }}
-            >
-              <div style={{ position: "absolute", top: 0, right: 0, width: 160, height: 160, opacity: 0.18 }}>
-                <AtmosphereBg tone={m.tone} vignette={false} intensity={0.6} />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(225deg, transparent, var(--bg-1) 70%)" }} />
-              </div>
-
-              <div className="f-serif" style={{
-                fontSize: 64, lineHeight: 1, fontStyle: "italic", fontWeight: 500,
-                color: "var(--gold-hover)", letterSpacing: "-0.04em",
-                marginBottom: 14,
-              }}>{m.num}</div>
-
-              <div className="f-display" style={{ fontSize: 22, lineHeight: 1.2, marginBottom: 14, letterSpacing: "-0.005em" }}>
-                {m.title}
-              </div>
-
-              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 18px", display: "grid", gap: 8, flex: 1 }}>
-                {m.topics.map((t, i) => (
-                  <li key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", fontSize: 13.5, color: "var(--text-1)", lineHeight: 1.4 }}>
-                    <span style={{ color: "var(--gold)", marginTop: 4, flexShrink: 0 }}><IconCheck size={11} /></span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 14, borderTop: "1px solid var(--border)" }}>
-                <span className="badge-outline">{m.lessons} aulas</span>
-                <span style={{ fontSize: 12, color: "var(--text-2)" }}>{Math.floor(m.durationMin/60)}h {m.durationMin%60}min</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ============ MENTOR ============ */}
-      <section style={{ position: "relative", overflow: "hidden", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", background: "#080808" }}>
-        <MentorPortrait side="left" mode="full" />
-
-        <div className="page" style={{ position: "relative", zIndex: 2, padding: "96px 64px", display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: 64 }}>
-          <div />
-          <div>
-            <span className="badge-gold" style={{ marginBottom: 22, display: "inline-flex" }}><IconStar size={10} /> Quem é o mentor</span>
-            <h2 className="f-display" style={{ fontSize: 56, lineHeight: 1.05, margin: "0 0 14px", letterSpacing: "-0.02em" }}>
-              Paulo <em style={{ fontStyle: "italic", color: "var(--gold-hover)", fontWeight: 600 }}>Miguel</em>
-            </h2>
-            <p className="f-serif" style={{ fontSize: 22, fontStyle: "italic", color: "var(--text-1)", margin: "0 0 32px" }}>
-              Estrategista Jurídico <span style={{ color: "var(--gold)" }}>·</span> Alta Performance
-            </p>
-            <p style={{ fontSize: 16, lineHeight: 1.65, color: "var(--text-1)", margin: "0 0 24px", maxWidth: 540 }}>
-              Por mais de uma década, Paulo trabalhou nos bastidores de bancas que faturam de seis a sete dígitos mensais. A Maleta é a primeira vez que ele estrutura essa metodologia inteira em um único lugar — sem reservar a "parte boa" para clientes privados.
-            </p>
-            <p className="f-serif" style={{ fontSize: 17, fontStyle: "italic", color: "var(--gold-hover)", margin: 0, maxWidth: 540, lineHeight: 1.5 }}>
-              "Não ensino o que funciona em teoria. Ensino exatamente o que aplico — porque eu mesmo construí a banca antes de ensinar a construí-la."
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ SOCIAL PROOF ============ */}
-      <section className="page" style={{ padding: "96px 64px" }}>
-        <div style={{ display: "flex", gap: 56, marginBottom: 64, padding: "32px 0", borderTop: "1px solid var(--gold-line)", borderBottom: "1px solid var(--gold-line)" }}>
-          {[
-            { num: "2.400+", label: "Advogados" },
-            { num: "4.9★", label: "Avaliação média" },
-            { num: "98%", label: "Recomendam" },
-            { num: "R$ 50M+", label: "Estruturados em honorários" },
-          ].map((s, i) => (
-            <div key={i} style={{ flex: 1 }}>
-              <div className="f-display" style={{ fontSize: 38, color: "var(--gold-hover)", lineHeight: 1, letterSpacing: "-0.02em", marginBottom: 6 }}>{s.num}</div>
-              <div style={{ fontSize: 11.5, color: "var(--text-2)", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600 }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
-
-        <h2 className="section-label">Quem já está na maleta <IconStar /></h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
-          {TESTIMONIALS.map((t, i) => (
-            <div key={i} style={{
-              position: "relative",
-              background: "var(--bg-1)",
-              border: "1px solid var(--border)",
-              borderRadius: 6,
-              padding: "32px 28px 26px",
-              display: "flex", flexDirection: "column",
-              minHeight: 280,
-            }}>
-              <div className="f-display" style={{
-                fontSize: 72, lineHeight: 0.6, color: "var(--gold)",
-                marginBottom: 8, fontStyle: "italic", fontWeight: 700,
-              }}>"</div>
-              <p className="f-serif" style={{ fontSize: 17, lineHeight: 1.5, fontStyle: "italic", color: "var(--text-1)", margin: "0 0 24px", flex: 1 }}>
-                {t.text}
-              </p>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 18, borderTop: "1px solid var(--border)" }}>
-                <div style={{
-                  width: 44, height: 44, borderRadius: "50%",
-                  background: "linear-gradient(135deg, #2a2218, #14100a)",
-                  border: "1px solid var(--gold-line)",
+          {/* 6. Password */}
+          <div style={{ marginBottom: 12 }}>
+            <label style={labelStyle}>Senha</label>
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="••••••••"
+                style={{ ...inputBase, paddingRight: 44 }}
+                onFocus={e => e.target.style.borderColor = "#C9A050"}
+                onBlur={e => e.target.style.borderColor = "rgba(201,160,80,0.2)"}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(p => !p)}
+                aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                style={{
+                  position: "absolute", right: 8, top: "50%",
+                  transform: "translateY(-50%)",
+                  width: 32, height: 32,
+                  background: "none", border: 0, cursor: "pointer",
+                  color: "#6B6560",
                   display: "grid", placeItems: "center",
-                  fontFamily: "var(--f-display)", fontSize: 16, color: "var(--gold-hover)",
-                }}>{t.name.split(" ").slice(-2).map(s => s[0]).join("")}</div>
-                <div>
-                  <div className="f-display" style={{ fontSize: 14, color: "var(--text-0)" }}>{t.name}</div>
-                  <div style={{ fontSize: 11.5, color: "var(--text-2)", letterSpacing: "0.06em" }}>{t.role}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ============ FINAL CTA ============ */}
-      <section style={{ position: "relative", overflow: "hidden", borderTop: "1px solid var(--border)", background: "#080808" }}>
-        <MentorPortrait side="right" mode="full" />
-
-        <div className="page" style={{ position: "relative", zIndex: 2, padding: "112px 64px", maxWidth: 720 }}>
-          <span className="badge-gold" style={{ marginBottom: 22, display: "inline-flex" }}>
-            <IconStar size={10} /> Última chance — Edição 2026
-          </span>
-          <h2 className="f-display" style={{ fontSize: 52, lineHeight: 1.05, margin: "0 0 24px", letterSpacing: "-0.02em", maxWidth: 560 }}>
-            A maleta está aberta. <em style={{ fontStyle: "italic", color: "var(--gold-hover)", fontWeight: 600 }}>Por enquanto.</em>
-          </h2>
-          <p className="f-serif" style={{ fontSize: 20, fontStyle: "italic", color: "var(--text-1)", margin: "0 0 40px", lineHeight: 1.5 }}>
-            Você pode passar mais cinco anos cobrando o que cabe — ou começar hoje a estruturar uma carreira que vale o que ela realmente entrega.
-          </p>
-
-          <div style={{ display: "flex", alignItems: "center", gap: 28, marginBottom: 28 }}>
-            <span className="f-display" style={{ fontSize: 56, lineHeight: 1, color: "var(--gold-hover)", letterSpacing: "-0.03em", fontWeight: 800 }}>R$ 497</span>
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 13, textDecoration: "line-through", color: "var(--text-3)" }}>De R$ 1.997</span>
-              <span style={{ fontSize: 12, color: "var(--text-2)", letterSpacing: "0.06em" }}>pagamento único · vitalício</span>
+                  transition: "color 180ms ease",
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = "#C9A050"}
+                onMouseLeave={e => e.currentTarget.style.color = "#6B6560"}
+              >
+                {showPassword ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 3l18 18" />
+                    <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8" />
+                    <path d="M9.9 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17.8 17.8 0 0 1-3.2 4.4" />
+                    <path d="M6.6 6.6A17.7 17.7 0 0 0 2 12s3.5 7 10 7a10 10 0 0 0 4.5-1" />
+                  </svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                )}
+              </button>
             </div>
           </div>
 
-          <button className="btn btn-gold btn-lg glow-gold" style={{ height: 64, padding: "0 36px", fontSize: 13 }} onClick={() => onNavigate("home")}>
-            Quero minha Maleta agora <IconArrow size={14} />
+          {/* 7. Forgot password */}
+          <div style={{ textAlign: "right", marginBottom: 28 }}>
+            <a
+              href="#"
+              onClick={e => e.preventDefault()}
+              style={{
+                fontFamily: "var(--f-sans)", fontSize: 12,
+                color: "#6B6560", textDecoration: "none",
+                transition: "color 180ms ease",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = "#C9A050"; e.currentTarget.style.textDecoration = "underline"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = "#6B6560"; e.currentTarget.style.textDecoration = "none"; }}
+            >
+              Esqueceu sua senha?
+            </a>
+          </div>
+
+          {/* 8. Login button */}
+          <button
+            type="button"
+            onClick={() => onNavigate("home")}
+            style={{
+              width: "100%", height: 52,
+              background: "#C9A050",
+              color: "#080808",
+              border: 0, borderRadius: 4,
+              fontFamily: "var(--f-sans)", fontSize: 13, fontWeight: 700,
+              textTransform: "uppercase", letterSpacing: "0.1em",
+              cursor: "pointer",
+              transition: "background 200ms ease, box-shadow 200ms ease",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = "#E8B85A";
+              e.currentTarget.style.boxShadow = "0 0 20px rgba(201,160,80,0.3)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = "#C9A050";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            ENTRAR NA MALETA
           </button>
 
-          {/* Guarantee seal */}
-          <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 36, padding: "16px 22px", border: "1px solid var(--border)", borderRadius: 6, background: "rgba(17,17,17,0.5)", maxWidth: 480 }}>
-            <div style={{
-              width: 56, height: 56, borderRadius: "50%",
-              border: "2px solid var(--gold)",
-              display: "grid", placeItems: "center",
-              color: "var(--gold-hover)", flexShrink: 0,
-            }}>
-              <IconGuarantee size={26} />
-            </div>
-            <div>
-              <div className="f-display" style={{ fontSize: 15, color: "var(--text-0)", marginBottom: 4 }}>Garantia incondicional de 7 dias</div>
-              <div style={{ fontSize: 12.5, color: "var(--text-2)", lineHeight: 1.5 }}>
-                Se a Maleta não for tudo que você esperava, devolvemos 100% do investido. Sem perguntas.
-              </div>
-            </div>
+          {/* 9. Beta bypass */}
+          <div style={{
+            display: "flex", alignItems: "center", gap: 14,
+            margin: "22px 0",
+          }}>
+            <div style={{ flex: 1, height: 1, background: "rgba(201,160,80,0.1)" }} />
+            <span style={{
+              fontFamily: "var(--f-sans)", fontSize: 11, color: "#6B6560",
+              letterSpacing: "0.12em", textTransform: "uppercase",
+            }}>ou</span>
+            <div style={{ flex: 1, height: 1, background: "rgba(201,160,80,0.1)" }} />
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onNavigate("home")}
+            style={{
+              width: "100%", height: 44,
+              background: "transparent",
+              border: "1px solid rgba(201,160,80,0.2)",
+              borderRadius: 4,
+              color: "#C9A050",
+              fontFamily: "var(--f-sans)", fontSize: 13,
+              cursor: "pointer",
+              transition: "background 200ms ease",
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = "rgba(201,160,80,0.06)"}
+            onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+          >
+            Entrar em modo demonstração →
+          </button>
+
+          {/* 10. Trust badges */}
+          <div style={{
+            marginTop: 32, textAlign: "center",
+            fontFamily: "var(--f-sans)", fontSize: 11, color: "#4A4540",
+            letterSpacing: "0.04em",
+          }}>
+            🔒 Acesso seguro · ✦ Dados protegidos
           </div>
         </div>
-      </section>
-
-      <MalFooter />
+      </div>
     </div>
   );
 };

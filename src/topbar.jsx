@@ -2,7 +2,7 @@
 
 const Topbar = ({ route, onNavigate }) => {
   const [search, setSearch] = React.useState("");
-  const isLanding = route === "landing";
+  if (route === "landing") return null;
 
   return (
     <header style={{
@@ -15,7 +15,7 @@ const Topbar = ({ route, onNavigate }) => {
     }}>
       <div className="page" style={{ height: "100%", display: "flex", alignItems: "center", gap: 32 }}>
         {/* Wordmark */}
-        <button onClick={() => onNavigate(isLanding ? "landing" : "home")}
+        <button onClick={() => onNavigate("home")}
           style={{ display: "flex", alignItems: "center", gap: 12, background: "none", border: 0, cursor: "pointer", padding: 0 }}>
           <span style={{
             width: 36, height: 36, borderRadius: 4,
@@ -34,9 +34,7 @@ const Topbar = ({ route, onNavigate }) => {
           </span>
         </button>
 
-        {!isLanding && (
-          <>
-            {/* Nav links */}
+        {/* Nav links */}
             <nav style={{ display: "flex", gap: 4, marginLeft: 8 }}>
               {[
                 { id: "home", label: "Início" },
@@ -112,26 +110,26 @@ const Topbar = ({ route, onNavigate }) => {
                 </div>
                 <span style={{ color: "var(--text-2)", marginLeft: 4 }}><IconChevron size={11} /></span>
               </div>
-            </div>
-          </>
-        )}
 
-        {isLanding && (
-          <div style={{ marginLeft: "auto", display: "flex", gap: 12, alignItems: "center" }}>
-            <button onClick={() => onNavigate("home")}
-              style={{
-                background: "none", border: 0, cursor: "pointer",
-                fontFamily: "var(--f-sans)", fontWeight: 600, fontSize: 13,
-                color: "var(--text-1)", padding: "8px 14px",
-              }}>
-              Já sou aluno
-            </button>
-            <button className="btn btn-gold btn-sm" onClick={() => onNavigate("home")}>
-              Quero a Maleta
-              <IconArrow size={12} />
-            </button>
-          </div>
-        )}
+              {/* Sair da conta */}
+              <button onClick={() => onNavigate("landing")}
+                style={{
+                  background: "transparent",
+                  border: "1px solid var(--border)",
+                  borderRadius: 4,
+                  padding: "8px 14px",
+                  fontFamily: "var(--f-sans)", fontWeight: 600, fontSize: 12,
+                  letterSpacing: "0.04em",
+                  color: "var(--text-1)",
+                  cursor: "pointer",
+                  transition: "all 180ms ease",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--gold-line)"; e.currentTarget.style.color = "var(--gold-hover)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text-1)"; }}
+              >
+                Sair da conta
+              </button>
+            </div>
       </div>
     </header>
   );

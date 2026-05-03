@@ -3,7 +3,6 @@
 const Topbar = ({ route, onNavigate }) => {
   const [search, setSearch] = React.useState("");
   const [menuOpen, setMenuOpen] = React.useState(false);
-  if (route === "landing") return null;
 
   // Close drawer when route changes
   React.useEffect(() => { setMenuOpen(false); }, [route]);
@@ -20,6 +19,8 @@ const Topbar = ({ route, onNavigate }) => {
       window.removeEventListener("keydown", onKey);
     };
   }, [menuOpen]);
+
+  if (route === "landing") return null;
 
   const navItems = [
     { id: "home",     label: "Início" },
